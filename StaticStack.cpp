@@ -19,6 +19,7 @@ private:
     int capacity;
     int* st;
     int top;
+    int size;
 public:
     Stack(int capacity);
     bool push(int value);
@@ -28,6 +29,7 @@ public:
     bool isFull();
     void print();
     int get_capacitty();
+    int get_size();
 };
 
 Stack::Stack(int capacity)
@@ -35,6 +37,7 @@ Stack::Stack(int capacity)
     this->capacity = capacity;
     this->st = (int*)malloc(capacity*sizeof(int));
     this->top=-1;
+    this->size=0;
 }
 
 bool Stack::push(int value){
@@ -44,6 +47,7 @@ bool Stack::push(int value){
     }
 
     this->st[++this->top]=value;
+    this->size++;
     return true;
 }
 
@@ -55,6 +59,7 @@ int Stack::pop(){
 
     int value = this->st[top];
     this->top--;
+    this->size--;
     return value;
 }
 
@@ -88,13 +93,16 @@ int Stack::get_capacitty(){
     return this->capacity;
 }
 
+int Stack::get_size(){
+    return this->size;
+}
+
 
 
 
 int main(){
 
     fastio
-
     Stack* st = new Stack(5);
     st->push(5);
     st->push(5);

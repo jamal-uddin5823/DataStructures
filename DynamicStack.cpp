@@ -78,6 +78,10 @@ public:
 
     void print(){
         Node* current = this->top;
+        if(this->isEmpty()){
+            cout<<"Stack Empty\n";
+            return;
+        }
         while(current){
             cout<<"| "<<current->value<<" |\n";
             current =current->next;
@@ -93,15 +97,10 @@ int main(){
     fastio
 
     Stack* st = new Stack();
-    st->push(5);
-    st->push(4);
-    st->push(3);
-    st->push(2);
     st->push(1);
-    cout<<st->peek()<<'\n';
-    st->pop();
-    st->print();
-    cout<<st->get_size()<<'\n';
+    cout<<st->peek()<<"\n";
+    st->push(2);
+    cout<<st->peek()<<"\n";
     
 
     return 0;

@@ -30,6 +30,8 @@ public:
     void print();
     int get_capacitty();
     int get_size();
+    void clear();
+    int search(int value);
 };
 
 Stack::Stack(int capacity)
@@ -97,6 +99,16 @@ int Stack::get_size(){
     return this->size;
 }
 
+void Stack::clear(){
+    this->top=-1;
+}
+int Stack::search(int value){
+    for (int i = this->top; i >=0 ; i--)
+    {
+        if(this->st[i]==value) return this->top-i;
+    }
+    return -1;
+}
 
 
 

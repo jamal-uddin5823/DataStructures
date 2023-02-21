@@ -88,7 +88,19 @@ public:
         }cout<<"_____\n";
     }
 
-    
+    void clear(){
+        this->top = NULL;
+    }
+    int search(int value){
+        int indx = 0;
+        Node* current = this->top;
+        while(current){
+            if(current->value==value) return indx;
+            current = current->next;
+            indx++;
+        }
+        return -1;
+    }
 
 };
 

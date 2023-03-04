@@ -101,13 +101,130 @@ string in2Pre(string& s){
 
 }
 
+int power(int a, int b){
+    ll ans = 1;
+    for (int i = 0; i < b; i++)
+    {
+        ans*=1LL*a;
+    }
+    return ans;
+}
+
+int evaluatePre(string s){
+    int a =0 ,b = 0;
+    stack<int> st;
+    if(s[s.size()-1]=='+'||s[s.size()-1]=='-'||s[s.size()-1]=='*'||s[s.size()-1]=='/'|| s[s.size()-1]=='^'){
+        cout<<"Not a prefix\n";
+        return INT_MIN;
+    }
+
+    for (int i = s.size() - 1; i >= 0; i--)
+    {
+        if(s[i]=='+' || s[i]=='-' ||s[i]=='*' ||s[i]=='/' || s[i]=='^' ){
+            a = st.top();
+            st.pop();
+            b = st.top();
+            st.pop();
+
+            switch (s[i])
+            {
+            case '+':
+                st.push((a)+(b));
+                break;
+
+            case '-':
+                st.push((a)-(b));
+                break;
+
+            case '*':
+                st.push((a)*(b));
+                break;
+
+            case '/':
+                st.push((a)/(b));
+                break;
+            
+            case '^':
+                st.push(power((a),(b)));
+            
+            default:
+                break;
+            }
+        }
+        else{
+            st.push(s[i]-'0');
+        }
+    }
+    return st.top();
+    
+}
+
+int evaluatePost(string s){
+    int a = 0, b = 0;
+    stack<int> st;
+
+    if(!(s[s.size()-1]=='+'||s[s.size()-1]=='-'||s[s.size()-1]=='*'||s[s.size()-1]=='/'|| s[s.size()-1]=='^')){
+        cout<<"Not a postfix\n";
+        return INT_MIN;
+    }
+
+    for (int i = 0; i < s.size(); i++)
+    {
+        if(s[i]=='+' || s[i]=='-' ||s[i]=='*' ||s[i]=='/' || s[i]=='^' ){
+            a = st.top();
+            st.pop();
+            b = st.top();
+            st.pop();
+ 
+
+            switch (s[i])
+            {
+            case '+':
+                st.push((a)+(b));
+                break;
+
+            case '-':
+                st.push((b)-(a));
+                break;
+
+            case '*':
+                st.push((a)*(b));
+                break;
+
+            case '/':
+                st.push((b)/(a));
+                break;
+            
+            case '^':
+                st.push(power((b),(a)));
+            
+            default:
+                break;
+            }
+        }
+        else{
+            st.push(s[i]-'0');
+        }
+        
+    }
+    return st.top();
+
+
+}
+
 int main(){
 
     fastio
 
     string s;   cin>>s;
+    string ans1 = in2Post(s);
+    string ans2 = in2Pre(s);
+    cout<<ans1<<'\n';
+    cout<<ans2<<'\n';
 
-    cout<<in2Post(s)<<'\n';
+
+    cout<<evaluatePost(ans1)<<'\n';
+    cout<<evaluatePre(ans2)<<'\n';
     
 
 return 0;

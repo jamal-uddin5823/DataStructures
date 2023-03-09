@@ -163,13 +163,16 @@ public:
 
     int remove_with_value(int value){
         int index = this->find(value);
+        Node* current = this->head;
 
-        if(index==-1){
-            cout<<"Value not available to remove\n";
-            return -1;
+        while(current!=nullptr && current->next->value!=value){
+            current = current->next;
         }
+        
+        if(current==nullptr) return -1;
 
-        this->remove_middle(index);
+        current->next = current->next->next;
+        this->size--;
         return 0;
     }
 
@@ -241,7 +244,7 @@ int main(int argc, char const *argv[])
     
     cin>>n;
 
-   for (int i = 0; i < n; i++)
+    for (int i = 0; i < n; i++)
     {
         int a;  cin>>a;
 
@@ -256,37 +259,37 @@ int main(int argc, char const *argv[])
 }
 
 
-////******************B*************************
-int main(int argc, char const *argv[])
-{
-    // associates standard input with input.txt 
-    freopen("Bin.txt", "r", stdin);
-    // associates standard output with output.txt
-    // (this will create a new file called output.txt if none exists)
-	freopen("Bout.txt", "w", stdout);
+// ////******************B*************************
+// int main(int argc, char const *argv[])
+// {
+//     // associates standard input with input.txt 
+//     freopen("Bin.txt", "r", stdin);
+//     // associates standard output with output.txt
+//     // (this will create a new file called output.txt if none exists)
+// 	freopen("Bout.txt", "w", stdout);
 
-    int tot;    cin>>tot;
-    // cout<<tot<<'\n';
-    LinkedList ans;
+//     int tot;    cin>>tot;
+//     // cout<<tot<<'\n';
+//     LinkedList ans;
 
-    for (int i = 0; i < tot; i++)
-    {
-        int n;  cin>>n;
-        LinkedList arr1;
+//     for (int i = 0; i < tot; i++)
+//     {
+//         int n;  cin>>n;
+//         LinkedList arr1;
 
-        for (int j = 0; j < n; j++)
-        {
-            int a; cin>>a;
-            arr1.insert_last(a);
-        }
+//         for (int j = 0; j < n; j++)
+//         {
+//             int a; cin>>a;
+//             arr1.insert_last(a);
+//         }
 
-        ans = merge(ans, arr1);
+//         ans = merge(ans, arr1);
         
-    }
+//     }
     
-    ans.print();
-    return 0;
-}
+//     ans.print();
+//     return 0;
+// }
 
 
 

@@ -74,7 +74,7 @@ class LinkedList{
             return;
         }
 
-        if(index == this.size-1){
+        if(index == this.size){
             insertAtEnd(value);
             return;
         }

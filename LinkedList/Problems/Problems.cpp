@@ -18,8 +18,6 @@ const int N = 1e7+10;
 class LL: public LinkedList{
 private:
     void rec(Node*& currNode, Node*& newNode, int index){
-        if(index<0 || index> this->size) return;
-
         if(currNode==nullptr|| index==0){
             if(index==0)
                 newNode->next = this->head;
@@ -36,11 +34,28 @@ private:
 
         rec(currNode->next,newNode,index-1);
     }
+
+    Node* recwithNode(int value, int index, Node* node){
+        if(index==0){
+            Node* newNode = new Node(value,node);
+            this->size++;
+            return newNode;
+        }
+
+        node->next = recwithNode(value,index-1,node->next);
+        return node;
+    }
 public:
     void insertRec(int value, int index){
+        if(index<0 || index> this->size) return;
+        
         Node* newNode = new Node(value);
 
         rec(this->head,newNode,index);
+    }
+
+    void insertRecNode(int value, int index){
+        this->head = recwithNode(value, index,this->head);
     }
 };
 
@@ -55,7 +70,7 @@ int main(){
     ll->insertRec(6,0);
     ll->insertRec(7,0);
     ll->print();
-    ll->insertRec(56,2);
+    ll->insertRecNode(56,2);
     ll->print();
     
 

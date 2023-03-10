@@ -34,15 +34,19 @@ public:
 
     void insert_front(int value){
         Node* newNode = new Node(value,this->head);
-        Node* current = this->head;
-        while(current->next!=nullptr){
-            current = current->next;
-            if(current->next == this->head) break;
+        if(this->head==nullptr){
+            this->head = newNode;
         }
-        current->next = newNode;
-        this->head = newNode;
+        else{
+            Node* current = this->head;
+            while(current->next!=nullptr){
+                current = current->next;
 
-
+                if(current->next == this->head) break;
+            }
+            current->next = newNode;
+            this->head = newNode;
+        }
         this->size++;
     }
 
@@ -210,23 +214,24 @@ public:
 
 int main(int argc, char const *argv[])
 {
-    // associates standard input with input.txt 
-    freopen("in.txt", "r", stdin);
-    // associates standard output with output.txt
-    // (this will create a new file called output.txt if none exists)
-	freopen("out.txt", "w", stdout);
+    // freopen("in.txt", "r", stdin);
+	// freopen("out.txt", "w", stdout);
 
     CircularLinkedList arr;
 
-    int n;  cin>>n;
-    
+    // int n;  cin>>n;
+    arr.insert_front(1);
+    arr.insert_front(2);
+    // arr.insert_last(1);
+    // arr.insert_last(2);
+    // arr.print();
 
-    for (int i = 0; i < n; i++)
-    {
-        int a;  cin>>a;
+    // for (int i = 0; i < n; i++)
+    // {
+    //     int a;  cin>>a;
 
-        arr.insert_last(a);
-    }
+    //     arr.insert_last(a);
+    // }
     // arr.remove_middle(2);
     // arr.remove_with_value(3);
 

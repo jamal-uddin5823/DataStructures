@@ -186,17 +186,25 @@ public class DoublyLinkedList {
         return index;
     }
 
-    public int removeWithValue(int value){
+    public void removeWithValue(int value){
         DoublyNode currNode = this.head;
-        int index = 0;
 
-        while(currNode!=null && currNode.value!=value){
-            index++;
+        if(this.head.value==value){
+            removeAtBeginning();
+            return;
+        }
+
+        while(currNode!=null && currNode.next.value!=value){
             currNode = currNode.next;
         }
 
-        if(currNode==null) return -1;
-        return index;
+        if(currNode==null) return;
+
+        
+
+        currNode.next = currNode.next.next;
+        currNode.next.prev = currNode;
+        this.size--;
     }
 
     public void printForward(){

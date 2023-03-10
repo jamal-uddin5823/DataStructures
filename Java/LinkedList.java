@@ -155,6 +155,11 @@ class LinkedList{
     public void removeWithValue(int value){
         Node currNode = this.head;
 
+        if(this.head.value==value){
+            removeAtBeginning();
+            return;
+        }
+
         while(currNode!=null && currNode.next.value!=value){
             currNode=currNode.next;
         }

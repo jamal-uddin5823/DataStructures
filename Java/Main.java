@@ -1,14 +1,14 @@
 public class Main{
     public static void main(String[] args) {
-        DoublyLinkedList ll = new DoublyLinkedList();
-
+        CircularLinkedList ll = new CircularLinkedList();
         ll.insertAtBeginning(0);
-        ll.insertAtBeginning(1);
+        // System.out.println(ll.getHead());
+        
+        ll.insertAtEnd(1);
         ll.insertAtEnd(2);
-        ll.insertAtMiddle(34, 2);
-        ll.printForward();
-        ll.removeAtMiddle(2);
-        ll.printForward();
-        System.out.println(ll.find(2));
+        ll.insertAtEnd(3);
+        ll.insertAtEnd(4);
+        // ll.removeWithValue(4);
+        ll.print();
     }
 }

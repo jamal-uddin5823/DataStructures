@@ -11,7 +11,59 @@ void swap(int *x,int *y){
     *y=temp;
 }
 
-int partition(int arr[],int low,int high, int exp){
+void bubbleSort(int arr[], int n){
+    for (int i = 0; i < n-1; i++)
+    {
+        bool swapped=false;
+        for (int j = 0; j < n-i-1; j++)
+        {
+            if(arr[j]>arr[j+1]){
+                swap(arr[j],arr[j+1]);
+                swapped = true;
+            }
+        }
+        if(!swapped) break;
+        
+    } 
+}
+
+void selectionSort(int arr[], int n){
+    for (int i = 0; i < n-1; i++)
+    {
+        int min = i;
+
+        for (int j = i+1; j < n; j++)
+        {
+            if(arr[j]<arr[min]){
+                min = j;
+            }
+        }
+
+        swap(arr[i],arr[min]);
+        
+    }
+    
+}
+
+void insertionSort(int arr[], int n){
+    for (int i = 1; i < n; i++)
+    {
+        int key = arr[i];
+        int j=i-1;
+
+        while(j>=0 && arr[j]>key){
+            arr[j+1]=arr[j];
+            j--;
+        }
+        arr[j+1]=key;
+    }
+    
+}
+
+//Quick Sort--------------------------------------------------
+
+//partition algos
+int hoare_partition(int arr[],int low,int high, int exp){
 
     int pivot = (arr[low]/exp)%10;
     int i = low-1, j = high+1;
@@ -26,56 +78,59 @@ int partition(int arr[],int low,int high, int exp){
     }
 }
 
-//Quick Sort--------------------------------------------------
+int partition(int arr[], int low, int high){
+    int pivot = arr[high];
+
+    int i = low-1;
+
+
+    for (int j = low; j < high; j++)
+    {
+        if(arr[j]<pivot){
+            i++;
+            swap(arr[i],arr[j]);
+        }
+    }
+    swap(arr[i+1],arr[high]);
+    return (i+1);
+
+}
+
 void quickSort(int arr[],int low,int high, int exp){
     if(low>=high) return;
-    int p =  partition(arr,low,high,exp);
-    quickSort(arr,low,p,exp);
+    int p =  hoare_partition(arr,low,high,exp); 
+    quickSort(arr,low,p,exp);  //p-1 for not hoare
     quickSort(arr,p+1,high,exp);
 }
 
+
+
 //Merge Sort--------------------------------------------------
 /* Function to merge the subarrays of A[] */
-void merge(int A[],int left,int mid,int right, int exp){
-    int i,j;
-    int size_left =mid-left+1;
-    int size_right =right-mid;
-    
-//temporary arrays
-    int L[size_left],R[size_right]; 
+void merge(int arr[], int low, int mid, int high,int exp){
+    int i = low;
+    int j = mid+1;
+    int k = 0;
 
-//copy data to temp arrays
-    for(i=0;i<size_left;i++){ 
-        L[i]=A[left+i];
-    }
-    for(j=0;j<size_right;j++){
-        R[j]=A[mid+1+j];
-    }
+    int ans[high-low+1];
 
-    i=0;
-    j=0;
-    int k=left;
-
-    while(i<size_left && j<size_right){
-        if((L[i]/exp)%10<=(R[j]/exp)%10){
-            A[k]=L[i];
-            i++;
-        }else{
-            A[k]=R[j];
-            j++;
+    while(i<=mid && j<=high){
+        if((arr[i]/exp)%10<=(arr[j]/exp)%10){
+            ans[k++]=arr[i++];
         }
-        k++;
+        else{
+            ans[k++]=arr[j++];
+        }
     }
-    while(i<size_left){
-        A[k]=L[i];
-        i++;
-        k++;
+
+    while(i<=mid) ans[k++]=arr[i++];
+    while(j<=high) ans[k++]=arr[j++];
+
+    for (int i = 0; i < high-low+1; i++)
+    {
+        arr[i+low]= ans[i];
     }
-    while(j<size_right){
-        A[k]=R[j];
-        j++;
-        k++;
-    }
+    
 }
 
 void mergeSort(int arr[],int low,int high, int exp){
@@ -85,6 +140,7 @@ void mergeSort(int arr[],int low,int high, int exp){
     mergeSort(arr,mid+1,high,exp);
     merge(arr,low,mid,high,exp);
 }
+
 
 //Counting Sort--------------------------------------------------
 //Function to get the largest element from an array
@@ -96,11 +152,43 @@ int getMax(int arr[],int n){
   return max;
 }
 
+void countingSort(int arr[],int n){
+    
+    int max = getMax(arr,n);
+
+    int count[max+1];
+    memset(count,0,sizeof count);
+
+
+    for (int i = 0; i < n; i++)
+    {
+        count[arr[i]]++;
+    }
+
+    for (int i = 1; i < max+1; i++)
+    {
+        count[i]+=count[i-1];
+    }
+
+    int ans[n];
+
+    for (int i = n-1 ; i >= 0; i--)
+    {
+        ans[--count[arr[i]]]=arr[i];
+    }
+
+    for (int i = 0; i < n; i++)
+    {
+        arr[i]=ans[i];
+    }
+}
+
 //Using counting sort to sort the elements in the basis of significant places
-void countingSort(int arr[], int n, int exp){
+void countingSortforRadix(int arr[], int n, int exp){
   int output[n]; // output array
-    int i, count[10] = { 0 };
- 
+    int i, count[10];
+    memset(count,0,sizeof count);
+
     // Store count of occurrences in count[]
     for (i = 0; i < n; i++)
         count[(arr[i] / exp) % 10]++;
@@ -112,8 +200,7 @@ void countingSort(int arr[], int n, int exp){
  
     // Build the output array
     for (i = n - 1; i >= 0; i--) {
-        output[count[(arr[i] / exp) % 10] - 1] = arr[i];
-        count[(arr[i] / exp) % 10]--;
+        output[--count[(arr[i] / exp) % 10]] = arr[i];   
     }
  
     // Copy the output array to arr[], so that arr[] now
@@ -141,7 +228,7 @@ void radixsortUsingcounting(int arr[], int n) {
     int mx = getMax(arr,n);
 
     for (int place = 1; mx / place > 0; place *= 10)
-        countingSort(arr, n, place);
+        countingSortforRadix(arr, n, place);
 }
 
 void radixsortUsingquick(int arr[], int n) {

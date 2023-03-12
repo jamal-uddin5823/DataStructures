@@ -29,6 +29,10 @@ public:
         st1 = new int[capacity];
         st2 = new int[capacity];
     }
+    
+    int getSize(){
+        return top1+1;
+    }
 
     void enqueue(int value){
         if(top1==capacity-1) return;
@@ -36,42 +40,32 @@ public:
         st1[++top1]=value;
     }
 
-    void dequeue(){
-        int j;
-        for (int i = top1,j=0; i >= 0; i--,j++)
+    void dequeue(){     
+        for (int i = top1; i >= 0; i--)
         {
-            st2[j]=st1[i];
+            st2[top1-i]=st1[i];
         }
-        top2 = j-1;
+        top2 = top1-1;
 
-        for (int i = top2,j=0; i >= 0; i--,j++)
+        for (int i = top2; i >= 0; i--)
         {
-            st1[j] = st2[i];
+            st1[top2-i] = st2[i];
         }
-        top1 = j;
+        top1 = top2;
         
     }
 
     int peek(){
-        int j;
-        for (int i = top1,j=0; i >= 0; i--,j++)
-        {
-            st2[j]=st1[i];
-        }
-        int value = st2[j];
-        top2 = j;
-
-
-        return value;
+        return st1[0];
     }
 
     void print(){
-        int j;
-        for (int i = top1,j=0; i >= 0; i--,j++)
+        for (int i = top1; i >= 0; i--)
         {
-            st2[j]=st1[i];
+            st2[top1-i]=st1[i];
         }
-        top2 = j;
+        
+        top2 = top1;
 
         for (int i = top2; i >= 0; i--)
         {
@@ -87,9 +81,15 @@ int main(){
 
     Queue* q = new Queue(5);
     q->enqueue(1);
-    q->print();
     q->enqueue(2);
+    q->enqueue(3);
     q->print();
+    cout<<q->peek()<<'\n';
+    q->dequeue();
+    // q->enqueue(2);
+    q->print();
+    cout<<q->peek()<<'\n';
+    cout<<q->getSize()<<'\n';
 
     return 0;
 }

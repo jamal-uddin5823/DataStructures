@@ -24,13 +24,17 @@ public:
         this->size = 0;
     }
 
-    int get_size(){
-        return this->size;
-    }
 
-    Node* get_head(){
-        return this->head;
-    }
+    int get_size(){return this->size;}
+
+    void set_size(int size){this->size = size;}
+
+    void increase_size(){this->size++;}
+    void decrease_size(){this->size--;}
+
+    Node* get_head(){return this->head;}
+
+    void set_head(Node* head){this->head = head;}
 
     void insert_front(int value){
         Node* newNode = new Node(value,this->head);
@@ -221,42 +225,42 @@ LinkedList merge(LinkedList a, LinkedList b){
 
 
 
-//******************A******************************//
-int main(int argc, char const *argv[])
-{
-    // associates standard input with input.txt 
-    freopen("Ain.txt", "r", stdin);
-    // associates standard output with output.txt
-    // (this will create a new file called output.txt if none exists)
-	freopen("Aout.txt", "w", stdout);
+// //******************A******************************//
+// int main(int argc, char const *argv[])
+// {
+//     // associates standard input with input.txt 
+//     freopen("Ain.txt", "r", stdin);
+//     // associates standard output with output.txt
+//     // (this will create a new file called output.txt if none exists)
+// 	freopen("Aout.txt", "w", stdout);
 
-    LinkedList arr1, arr2;
+//     LinkedList arr1, arr2;
 
-    int n;  cin>>n;
+//     int n;  cin>>n;
     
 
-    for (int i = 0; i < n; i++)
-    {
-        int a;  cin>>a;
+//     for (int i = 0; i < n; i++)
+//     {
+//         int a;  cin>>a;
 
-        arr1.insert_last(a);
-    }
+//         arr1.insert_last(a);
+//     }
     
-    cin>>n;
+//     cin>>n;
 
-    for (int i = 0; i < n; i++)
-    {
-        int a;  cin>>a;
+//     for (int i = 0; i < n; i++)
+//     {
+//         int a;  cin>>a;
 
-        arr2.insert_last(a);
-    }
+//         arr2.insert_last(a);
+//     }
     
 
-    LinkedList ans = merge(arr1,arr2);
+//     LinkedList ans = merge(arr1,arr2);
 
-    ans.print();
-    return 0;
-}
+//     ans.print();
+//     return 0;
+// }
 
 
 // ////******************B*************************
